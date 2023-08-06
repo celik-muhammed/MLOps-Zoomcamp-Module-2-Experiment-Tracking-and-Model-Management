@@ -1,5 +1,6 @@
 # Data artifacts
 **/data/
+**/output/
 *_v0.ipynb
 *.parquet
 *.html
@@ -11,34 +12,6 @@
 *.bin
 *.h5
 *.np
-
-# mlflow artifacts
-**/mlflow/
-**/mlruns/
-**/artifacts/
-*.db
-
-# prefect artifacts
-.prefectignore
-
-# python artifacts
-__pycache__/
-*.py[cod]
-*$py.class
-*.egg-info/
-*.egg
-
-# Type checking artifacts
-.mypy_cache/
-.dmypy.json
-dmypy.json
-.pyre/
-
-# IPython
-profile_default/
-ipython_config.py
-*.ipynb_checkpoints/*
-
 
 # Environments
 .python-version
@@ -52,19 +25,46 @@ venv/
 **.terraform.lock*
 **terraform.tfstate*
 
-# MacOS
-.DS_Store
+# python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+
+# IPython
+profile_default/
+ipython_config.py
+*.ipynb_checkpoints/*
+
+# mlflow artifacts
+**/mlflow/
+**/mlruns/
+**/artifacts/
+*.db
+
+# prefect artifacts
+.prefectignore
+
+# Type checking artifacts
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
 
 # Dask
 dask-worker-space/
+
+# VCS
+.git/
+.hg/
 
 # Editors
 .idea/
 .vscode/
 
-# VCS
-.git/
-.hg/
+# MacOS
+.DS_Store
 
 
 #######################################

@@ -28,8 +28,8 @@ def fetch_data(raw_data_path: str, year: int, month: int, color: str) -> None:
     # os.system(f"wget -q -N -P {raw_data_path} {url}")
     
     response = requests.get(url)
-    with open(filename, "wb") as f:
-        f.write(response.content)
+    with open(filename, "wb") as f_out:
+        f_out.write(response.content)
     return None
 
 
@@ -53,7 +53,7 @@ def read_data(filename: str) -> pd.DataFrame:
     df['lpep_pickup_datetime']  = pd.to_datetime(df['lpep_pickup_datetime'])
 
     df["duration"] = df['lpep_dropoff_datetime'] - df['lpep_pickup_datetime']
-    df.duration    = df.duration.apply(lambda td: td.total_seconds() / 60)
+    df["duration"] = df.duration.apply(lambda td: td.total_seconds() / 60)
 
     df = df[(df.duration >= 1) & (df.duration <= 60)]
 
@@ -123,26 +123,28 @@ def dump_pickle(obj, filename: str, dest_path: str):
 )
 @click.option(
     "--colors",
-    default="green yellow",
+    default="green",
     help="Colors where the raw NYC taxi trip data was saved"
 )
-def run_data_prep(raw_data_path: str, dest_path: str, years: str, months: str, colors: str) -> None:
-    # Download data    
+def run_data_prep(raw_data_path: str, dest_path: str, years: str, months: str, colors: str) -> None:  
+    # parameters
     years  = [int(year) for year in years.split()]
     months = [int(month) for month in months.split()]
-    colors = colors.split()[:1]
+    colors = colors.split()
+
+    # Download data  
     download_data(raw_data_path, years, months, colors)
     # print(sorted(glob(f'./data/*')))
     
     # Load parquet files
     df_train = read_data(
-        os.path.join(raw_data_path, f"{colors[0]}_tripdata_2022-01.parquet")
+        os.path.join(raw_data_path, f"{colors[0]}_tripdata_{years[0]}-{months[0]:0>2}.parquet")
     )
     df_val = read_data(
-        os.path.join(raw_data_path, f"{colors[0]}_tripdata_2022-02.parquet")
+        os.path.join(raw_data_path, f"{colors[0]}_tripdata_{years[0]}-{months[1]:0>2}.parquet")
     )
     df_test = read_data(
-        os.path.join(raw_data_path, f"{colors[0]}_tripdata_2022-03.parquet")
+        os.path.join(raw_data_path, f"{colors[0]}_tripdata_{years[0]}-{months[2]:0>2}.parquet")
     )
 
     # Fit the DictVectorizer and preprocess data

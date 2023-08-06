@@ -11,6 +11,7 @@ seaborn
 # ML Model packages
 scikit-learn
 xgboost
+optuna
 hyperopt
 
 # MLOPS experiment-tracking packages

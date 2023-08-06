@@ -33,14 +33,7 @@ def train_and_log_model(data_path, params):
     X_val, y_val     = load_pickle("val.pkl", data_path)
     X_test, y_test   = load_pickle("test.pkl", data_path)
 
-    with mlflow.start_run(nested=True):
-        # Optional: Set some information about Model
-        mlflow.set_tag("developer", "muce")
-        mlflow.set_tag("algorithm", "Machine Learning")
-        mlflow.set_tag("train-data-path", f'{data_path}/train.pkl')
-        mlflow.set_tag("valid-data-path", f'{data_path}/val.pkl')
-        mlflow.set_tag("test-data-path",  f'{data_path}/test.pkl') 
-        
+    with mlflow.start_run(nested=True):        
         for param in RF_PARAMS:
             params[param] = int(params[param])
             
@@ -89,8 +82,8 @@ def run_register_model(data_path: str, top_n: int):
     mlflow.set_experiment(EXPERIMENT_NAME)
     
     # before your training code to enable automatic logging of sklearn metrics, params, and models
-    mlflow.sklearn.autolog()   
-    
+    mlflow.sklearn.autolog()
+
     # Optional: Set some information about Model
     mlflow.set_tag("developer", "muce")
     mlflow.set_tag("algorithm", "Machine Learning")
@@ -101,7 +94,6 @@ def run_register_model(data_path: str, top_n: int):
 
     # Parameters
     HPO_EXPERIMENT_NAME = "random-forest-hyperopt"
-
     client = MlflowClient()
 
     # Retrieve the top_n model runs and log the models
