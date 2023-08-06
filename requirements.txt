@@ -1,31 +1,30 @@
 # To get started with MLflow you'll need to install the appropriate Python package.
 
-pandas==2.0.2
-orjson==3.9.1          # orjson is a fast, correct JSON library
-seaborn==0.12.2
-
-# ML Model packages
-scikit-learn==1.2.2
-xgboost==1.7.3
-
-# MLOPS packages
-mlflow==2.3.2
-wandb==0.15.4
-
-# ML Model packages
-hyperopt==0.2.7
-
 # for parquet file
-pyarrow==11.0.0
-fastparquet==2023.4.0
+pyarrow
+fastparquet
+# orjson is a fast, correct JSON library
+orjson
+pandas
+seaborn
 
-# AWS
-# boto3==1.26.144
+# ML Model packages
+scikit-learn
+xgboost
+hyperopt
+
+# MLOPS experiment-tracking packages
+mlflow
+wandb
 
 # Optionally
-black==23.3.0          # code style
+# for py file parameter
+click
+# for code style
+black
+# MLOPS Cloud packages
+boto3
 
 # Optionally
 jupyter
-ipykernel
 ipywidgets
