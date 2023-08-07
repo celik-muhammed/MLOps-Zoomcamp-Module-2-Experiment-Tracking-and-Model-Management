@@ -33,8 +33,12 @@ def load_pickle(filename: str, data_path: str):
     default="./models",
     help="Location where the resulting files will be saved"
 )
-def run_train(data_path: str, dest_path: str):
-    """The main training pipeline"""
+def run_train(data_path: str, dest_path: str):   
+    """The main training pipeline""" 
+    # Load train and test Data
+    X_train, y_train = load_pickle("train.pkl", data_path)
+    X_val, y_val     = load_pickle("val.pkl", data_path)
+
     # MLflow settings
     # Build or Connect Database Offline
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
@@ -47,10 +51,6 @@ def run_train(data_path: str, dest_path: str):
             
     # before your training code to enable automatic logging of sklearn metrics, params, and models
     mlflow.sklearn.autolog()    
-    
-    # Load train and test Data
-    X_train, y_train = load_pickle("train.pkl", data_path)
-    X_val, y_val     = load_pickle("val.pkl", data_path)
     
     with mlflow.start_run():
         # Optional: Set some information about Model

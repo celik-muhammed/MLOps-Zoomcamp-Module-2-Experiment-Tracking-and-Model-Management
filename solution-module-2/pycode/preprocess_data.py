@@ -19,14 +19,15 @@ from sklearn.feature_extraction import DictVectorizer
 
 def fetch_data(raw_data_path: str, year: int, month: int, color: str) -> None:
     """Fetches data from the NYC Taxi dataset and saves it locally"""
-    os.makedirs(raw_data_path, exist_ok=True)  
-
-    # Download the data from the NYC Taxi dataset
-    url      = f'https://d37ci6vzurychx.cloudfront.net/trip-data/{color}_tripdata_{year}-{month:0>2}.parquet'
+    url      = f'https://d37ci6vzurychx.cloudfront.net/trip-data/{color}_tripdata_{year}-{month:0>2}.parquet'    
     filename = os.path.join(raw_data_path, f'{color}_tripdata_{year}-{month:0>2}.parquet')
-    # urllib.request.urlretrieve(url, filename)
-    # os.system(f"wget -q -N -P {raw_data_path} {url}")
+
+    # Create dest_path folder unless it already exists
+    os.makedirs(raw_data_path, exist_ok=True)
     
+    # Download the data from the NYC Taxi dataset
+    # os.system(f"wget -q -N -P {raw_data_path} {url}")
+    # urllib.request.urlretrieve(url, filename)
     response = requests.get(url)
     with open(filename, "wb") as f_out:
         f_out.write(response.content)
@@ -91,11 +92,11 @@ def preprocess(df: pd.DataFrame, dv: DictVectorizer = None, fit_dv: bool = False
     return (X, y), dv
 
 
-def dump_pickle(obj, filename: str, dest_path: str):    
+def dump_pickle(obj, filename: str, dest_path: str): 
+    file_path = os.path.join(dest_path, filename)
+       
     # Create dest_path folder unless it already exists
     os.makedirs(dest_path, exist_ok=True)
-    file_path = os.path.join(dest_path, filename)
-    
     with open(file_path, "wb") as f_out:
         return pickle.dump(obj, f_out)
                 

@@ -31,6 +31,10 @@ def load_pickle(filename: str, data_path: str):
 )
 def run_optimization(data_path: str, num_trials: int):
     """The main optimization pipeline"""
+    # Load train and test Data
+    X_train, y_train = load_pickle("train.pkl", data_path)
+    X_val, y_val     = load_pickle("val.pkl", data_path) 
+    
     # MLflow settings
     # Build or Connect Database Offline
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
@@ -50,12 +54,7 @@ def run_optimization(data_path: str, num_trials: int):
     mlflow.set_tag("train-data-path", f'{data_path}/train.pkl')
     mlflow.set_tag("valid-data-path", f'{data_path}/val.pkl')
     mlflow.set_tag("test-data-path",  f'{data_path}/test.pkl') 
-    
-    # Load train and test Data
-    X_train, y_train = load_pickle("train.pkl", data_path)
-    X_val, y_val     = load_pickle("val.pkl", data_path)        
 
-    
     def objective(trial):
         params = {
             'n_estimators'     : trial.suggest_int('n_estimators', 10, 50, 1),

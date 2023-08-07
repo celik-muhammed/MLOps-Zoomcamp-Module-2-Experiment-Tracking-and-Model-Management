@@ -24,16 +24,16 @@ def load_pickle(filename: str, data_path: str):
         return pickle.load(f_in)
 
 
-def train_and_log_model(data_path, params):
-    # Parameters
-    RF_PARAMS = ['max_depth', 'n_estimators', 'min_samples_split', 'min_samples_leaf', 'random_state', 'n_jobs']
-    
+def train_and_log_model(data_path, params):    
     # Load train, val and test Data
     X_train, y_train = load_pickle("train.pkl", data_path)
     X_val, y_val     = load_pickle("val.pkl", data_path)
     X_test, y_test   = load_pickle("test.pkl", data_path)
 
-    with mlflow.start_run(nested=True):        
+    with mlflow.start_run(nested=True):           
+        # Parameters
+        RF_PARAMS = ['max_depth', 'n_estimators', 'min_samples_split', 'min_samples_leaf', 'random_state', 'n_jobs']
+
         for param in RF_PARAMS:
             params[param] = int(params[param])
             
